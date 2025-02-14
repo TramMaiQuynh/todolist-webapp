@@ -1,5 +1,5 @@
-import '/home/quynh-tram/SgodUTH/To_Do_list_web_app/Frontend/todo_frontend/src/AppPage.css';
-import TaskItem from "/home/quynh-tram/SgodUTH/To_Do_list_web_app/Frontend/todo_frontend/src/components/TaskItem.js"; // Giả sử bạn có TaskItem để hiển thị danh sách task
+import '../AppPage.css';
+import TaskItem from "../components/TaskItem.js"; // Giả sử bạn có TaskItem để hiển thị danh sách task
 import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
