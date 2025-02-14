@@ -1,0 +1,186 @@
+/* Container cho toàn bộ trang */
+html, body {
+  font-family: Arial, sans-serif;
+  height: 100%;  /* Đảm bảo chiều cao chiếm toàn bộ màn hình */
+  width:100%;
+  margin: 0;     /* Loại bỏ margin mặc định */
+  padding: 0;    /* Loại bỏ padding mặc định */
+}
+
+/* App Page */
+.app-page {
+  display: flex; /* Dùng flexbox để tạo layout */
+  flex-direction: row-reverse; /* Hiển thị form và danh sách task nằm ngang */
+  justify-content: space-between; /* Tạo khoảng cách giữa các phần tử */
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #e4c7bc; /* Màu nền */
+  height: 100vh; /* Chiều cao full trang */
+  box-sizing: border-box; /* Bao gồm padding trong chiều rộng và chiều cao */
+}
+
+/* Create task form */
+form {
+  max-width: 60%; /* Chiều rộng tối đa */
+  margin-right: 350px; /* Tạo khoảng cách voi le phai*/
+  background-color: #ffff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: none;
+}
+
+/* Tiêu đe: Create your new task */
+h2 {
+  font-size: 3rem;
+  margin-right: 350px; /* Tạo khoảng cách voi le phai*/
+  margin-bottom: 30px;
+  text-align: center;
+  color: #42332e;
+  font-weight: bold;
+}
+
+/* Các label */
+label {
+  display: block;
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Cố định chiều cao cho textarea và ngăn không cho kéo thu/phóng */
+textarea {
+  height: 80px; /* Cố định chiều cao */
+  resize: none; /* Ngăn không cho người dùng thay đổi kích thước */
+}
+
+/**/
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 5px;
+  font-size: 1rem;
+  font-family: 'Text AreaFont'; /* Tên tùy chỉnh để dùng trong CSS */
+  src: url('/home/quynh-tram/SgodUTH/To_Do_list_web_app/Frontend/todo_frontend/src/assets/fonts/TypoGraphica_demo.otf') format('opentype'); /* Định dạng là OpenType */  font-weight: normal; /* Ensure uniform weight */
+  border: 2px solid #55352b;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  color: #000000; /* Ensure text color is consistent */
+}
+
+/* Ensure the same font applies when input is focused */
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  font-family: 'Text AreaFont'; /* Tên tùy chỉnh để dùng trong CSS */
+  src: url('/home/quynh-tram/SgodUTH/To_Do_list_web_app/Frontend/todo_frontend/src/assets/fonts/TypoGraphica_demo.otf') format('opentype'); /* Định dạng là OpenType */  font-weight: normal; /* Ensure uniform weight */
+  border-color: #c9593e;
+  outline: none;
+}
+
+
+/* Nút Submit */
+button {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #8d7065;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+button:hover {
+  background-color: #8b5f4e;
+  transform: scale(1.05);
+}
+
+/*Input field for custom category*/
+/* input[placeholder="Enter a custom category"] {
+  margin-top: 10px;
+} */ 
+
+/* Checkbox */
+input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+/* Danh sách task */
+ul {
+  list-style-type: none;
+  padding: 0;
+  
+}
+
+/* Toast Notification - Change Background Color */
+.Toastify__toast {
+  width: 400px !important;  /* Adjust width to fit text on one line */
+  white-space: nowrap;
+  background-color: #f77c1e !important; /* Change to a custom color */
+  color: #55352b !important; /* Ensure text is readable */
+  font-weight: bold;
+}
+
+/* Customize the toast close button */
+.Toastify__close-button {
+  background-color: transparent !important;  /* Make sure no background color */
+  border: none !important;                   /* Remove any border */
+}
+
+.Toastify__close-button:hover {
+  background-color: transparent !important;  /* Remove background color on hover */
+  color: rgb(115, 208, 143) !important;  /* Change color of the 'X' on hover */
+}
+
+/* Change Toast Progress Bar Color */
+.Toastify__progress-bar {
+  background-color: hsl(22, 44%, 11%) !important; 
+}
+
+/* Change the tick icon color */
+.Toastify__toast--success svg {
+  fill: #ffffff !important; 
+}
+
+
+ul li {
+  background-color: #ecf0f1;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
+ul li:hover {
+  background-color: #dcdde1;
+}
+
+ul li strong {
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+ul li p {
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+ul li span {
+  font-size: 0.9rem;
+  color: #95a5a6;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1px;
+}
+
+

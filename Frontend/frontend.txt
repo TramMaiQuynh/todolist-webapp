@@ -1,0 +1,18 @@
+tao thu muc du an:
+npx create-react-app .
+
+cai dat cac goi can thiet:
+npm install axios react-router-dom @headlessui/react @heroicons/react tailwindcss
+npx tailwindcss init
+npm insstall web-vitals
+
+Chay thu app:
+npm start
+
+
+Tao thu muc components
+--> Tao file Homepage.jsx
+--> Tao file Dashboard.jsx
+--> Tao file Header.jsx
+--> Tao file Footer.jsx
+

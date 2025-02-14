@@ -1,0 +1,12 @@
+.footer {
+    background-color: #774734; /* Màu nền cho footer */
+    color: white; /* Màu chữ */
+    text-align: center; /* Canh giữa nội dung */
+    padding: 0.5px; /* Khoảng cách bên trong */
+    position: fixed; /* Đặt footer ở vị trí cố định */
+    bottom: 0; /* Đặt footer ở cuối trang */
+    left: 0;
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    font-size: 0.8rem; /* Kích thước chữ */
+  }
+  
