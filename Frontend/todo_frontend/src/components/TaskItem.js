@@ -4,7 +4,7 @@ import React, { useState, /*useEffect*/ } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '/home/quynh-tram/SgodUTH/To_Do_list_web_app/Frontend/todo_frontend/src/TaskItem.css';
+import '../TaskItem.css';
 
 const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);

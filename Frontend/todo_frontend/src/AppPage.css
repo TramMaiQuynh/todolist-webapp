@@ -63,7 +63,7 @@ select {
   padding: 5px;
   font-size: 1rem;
   font-family: 'Text AreaFont'; /* Tên tùy chỉnh để dùng trong CSS */
-  src: url('/home/quynh-tram/SgodUTH/To_Do_list_web_app/Frontend/todo_frontend/src/assets/fonts/TypoGraphica_demo.otf') format('opentype'); /* Định dạng là OpenType */  font-weight: normal; /* Ensure uniform weight */
+  src: url('./assets/fonts/TypoGraphica_demo.otf') format('opentype'); /* Định dạng là OpenType */  font-weight: normal; /* Ensure uniform weight */
   border: 2px solid #55352b;
   border-radius: 10px;
   box-sizing: border-box;
@@ -77,7 +77,7 @@ input[type="date"]:focus,
 textarea:focus,
 select:focus {
   font-family: 'Text AreaFont'; /* Tên tùy chỉnh để dùng trong CSS */
-  src: url('/home/quynh-tram/SgodUTH/To_Do_list_web_app/Frontend/todo_frontend/src/assets/fonts/TypoGraphica_demo.otf') format('opentype'); /* Định dạng là OpenType */  font-weight: normal; /* Ensure uniform weight */
+  src: url('./assets/fonts/TypoGraphica_demo.otf') format('opentype'); /* Định dạng là OpenType */  font-weight: normal; /* Ensure uniform weight */
   border-color: #c9593e;
   outline: none;
 }
