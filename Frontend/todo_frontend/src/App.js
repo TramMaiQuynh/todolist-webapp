@@ -30,6 +30,7 @@ import HomePage from './pages/HomePage';
 import AppPage from './pages/AppPage';
 import Footer from './components/Footer'
 import { ToastContainer } from 'react-toastify';
+import './index.css'; // Import Tailwind CSS
 
 
 const App = () => {

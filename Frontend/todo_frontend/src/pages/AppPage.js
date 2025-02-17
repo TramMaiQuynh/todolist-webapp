@@ -306,17 +306,6 @@ const AppPage = () => {
             </select>
           </label>
 
-          {/* <label>
-            Custom Category:
-            <input
-              type="text"
-              name="custom_category"
-              value={taskData.custom_category}
-              onChange={handleInputChange}
-              placeholder="Enter a custom category"
-            />
-          </label> */}
-
           <label>
             Is Important:
             <input
@@ -327,7 +316,7 @@ const AppPage = () => {
             />
           </label>     
                     
-          <button type="submit">Create Task</button>
+          <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Create Task</button>
         </form>
       </div>
 

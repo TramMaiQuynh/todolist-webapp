@@ -1,12 +1,16 @@
 .footer {
-    background-color: #774734; /* Màu nền cho footer */
-    color: white; /* Màu chữ */
-    text-align: center; /* Canh giữa nội dung */
-    padding: 0.5px; /* Khoảng cách bên trong */
-    position: fixed; /* Đặt footer ở vị trí cố định */
-    bottom: 0; /* Đặt footer ở cuối trang */
-    left: 0;
-    width: 100%; /* Chiếm toàn bộ chiều rộng */
-    font-size: 0.8rem; /* Kích thước chữ */
-  }
-  
+  background-color: #774734; /* Màu nền */
+  color: white; /* Màu chữ */
+  text-align: center; /* Canh giữa nội dung */
+  padding: 2px 0; /* Giảm khoảng cách trên/dưới */
+  position: fixed; /* Cố định ở cuối */
+  bottom: 0; 
+  left: 0;
+  width: 100%;
+  font-size: 0.7rem; /* Giảm kích thước chữ một chút */
+  line-height: 1.2; /* Giúp văn bản gọn hơn */
+  height: 20px; /* Định chiều cao cố định cho footer */
+  display: flex;
+  align-items: center; /* Căn giữa nội dung theo chiều dọc */
+  justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+}

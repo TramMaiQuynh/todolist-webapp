@@ -22,6 +22,7 @@ class TaskAdmin(admin.ModelAdmin):
     """
     list_display = [
         'title', 
+        'description',
         'status', 
         'priority', 
         'category', 
