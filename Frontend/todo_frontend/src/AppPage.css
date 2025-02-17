@@ -34,16 +34,16 @@ html, body {
   flex : 1;
   display: flex;
   flex-direction: column;
-  max-width: 60%;
+  max-width: 33%;
   /* margin-top: var(--spacing-unit); */
   /* padding: var(--spacing-unit); */
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
 }
 form {
   max-width: 100%;
-  margin-top: 0.625rem; /* 10px */
-  /* margin-right: min(21.875rem, 25%); */
+  margin-top: 0rem; 
+  margin-right: 0rem;
   background-color: #ffff;
   padding: var(--spacing-unit);
   box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1); /* 4px 10px */
@@ -64,7 +64,9 @@ h2 {
   /* margin-right: var(--title-right-margin, 1.25rem); 20px */
   /* margin-bottom: calc(var(--spacing-unit) * 1.5); */
   /* padding-top: 0.5rem; */
-  text-align: right;
+  padding-top: 1.3rem;
+  padding-bottom: 1.3rem;
+  text-align: center;
   color: #42332e;
   font-weight: bold;
   white-space: nowrap;
@@ -149,25 +151,51 @@ ul {
 
 /* Toast Notification */
 .Toastify__toast {
-  width: 25rem !important; /* 400px */
+  max-width: 15rem !important; /* Set a maximum width */
+  min-width: 8rem !important; /* Set a minimum width */
+  font-size: 0.6rem !important; /* Increase font size */
+  padding: 0.5rem 0.75rem !important; /* Add padding */
   white-space: nowrap;
-  background-color: #f77c1e !important;
-  color: #55352b !important;
+  background-color: #f77c1e !important; /* Background color */
+  color: #ffffff !important; /* Text color */
   font-weight: bold;
+  border-radius: 0.5rem !important; /* Rounded corners */
+  position: fixed !important;
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
 }
+
+
+.Toastify__toast--enter {
+  transform: translateY(-100%); /* Start position off-screen to the top */
+}
+
+
+.Toastify__toast--enter-active {
+  transform: translateX(0); /* Slide in from the left */
+}
+
+.Toastify__toast--exit {
+  transform: translateX(0); /* Start position on-screen */
+}
+
+.Toastify__toast--exit-active {
+  transform: translateY(-100%); /* Slide out to the top */
+}
+
 
 .Toastify__close-button {
   background-color: transparent !important;
   border: none !important;
+  color: #ffffff !important; /* Close button color */
 }
 
 .Toastify__close-button:hover {
   background-color: transparent !important;
-  color: rgb(115, 208, 143) !important;
+  color: #ffcccb !important; /* Hover color for close button */
 }
 
 .Toastify__progress-bar {
-  background-color: hsl(22, 44%, 11%) !important;
+  background-color: #ffffff !important; /* Progress bar color */
 }
 
 .Toastify__toast--success svg {
@@ -206,5 +234,4 @@ ul li span {
 .error-message {
   color: red;
   font-weight: bold;
-  margin-top: 0.0625rem; /* 1px */
 }

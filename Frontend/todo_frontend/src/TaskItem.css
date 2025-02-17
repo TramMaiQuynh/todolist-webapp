@@ -4,15 +4,17 @@
 .task-list {
     flex: 1;
     max-width: 25rem;
-    max-height: 20.5rem;
+    min-height: 3rem;
+    /* max-height: 20.5rem; */
     height: auto;
     margin-top: 7rem;
-    margin-left: 5%;
+    margin-bottom: 5rem;
+    margin-right: 7rem;
     background-color: #f8f1ef;
     padding: 1rem;
     padding-top: 0.9rem;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
   }
 
   /*Tieu de lon: Your task*/  
@@ -35,6 +37,7 @@
     border-radius: 0.4rem; /* Bo góc viền */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng nổi */
     background-color: #f9f9f9; /* Màu nền nhạt hơn */
+    min-block-size: 1.5rem;
   }
 
   
