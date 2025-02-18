@@ -6,12 +6,12 @@ html, body {
 }
 
 .square {
-  width: 5.2rem;
-  height: 5.2rem;
+  width: 3rem;
+  height: 3rem;
   background-color: #a27662;
-  border: 0.3rem solid #f1e1d3;
-  border-radius: 1.7rem;
-  margin: 0.2rem;
+  border: 0.2rem solid #f1e1d3;
+  border-radius: 1.2rem;
+  margin: 0.1rem;
   display: inline-block;
   position: relative;
 }
@@ -21,7 +21,7 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 3rem;
+  font-size: 2rem;
   color: #f1e1d3;
 }
 
@@ -29,7 +29,7 @@ html, body {
   display: flex;
   justify-content: center; /* Centers the button horizontally */
   align-items: center;     /* Centers the button vertically */
-  padding: 4rem
+  padding: 2rem
 }
 
 
@@ -47,9 +47,9 @@ html, body {
 
 .cta-button {
   font-family: 'ButtonFont', sans-serif;
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  padding: 1rem 6rem;
+  padding: 0.5rem 4rem;
   background-color: #805847;
   color: #fff;
   border-radius: 2rem;
@@ -99,7 +99,7 @@ html, body {
 
 .title {
   font-family: 'TitleFont', sans-serif;
-  font-size: 6rem;
+  font-size: 5rem;
   font-weight: bold;
   text-align: center;
   margin-top: 1.25rem;
