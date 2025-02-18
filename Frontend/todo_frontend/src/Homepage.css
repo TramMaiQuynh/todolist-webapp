@@ -1,101 +1,108 @@
 html, body {
-  height: 100%;  /* Đảm bảo chiều cao chiếm toàn bộ màn hình */
-  margin: 0;     /* Loại bỏ margin mặc định */
-  padding: 0;    /* Loại bỏ padding mặc định */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .square {
-    width: 80px;
-    height: 80px;
-    background-color: #a27662;
-    border: 4px solid #dfcfc9;
-    border-radius: 31px;
-    margin: 3px;
-    display: inline-block;
-    position: relative;
-  }
-  
-  .has-tick .tick {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 60px;
-    color: #dfcfc9;
-  }
-  
-  /* .logo-container {
-    margin-top: 20px;
-  } */
-  
-  .cta-container {
-    margin-top: 60px; /*Khoang cach so voi item phia tren*/
-  }
-  
-  @font-face {
-    font-family: 'ButtonFont'; /* Tên tùy chỉnh để dùng trong CSS */
-    src: url('./assets/fonts/Sublima-ExtraBold.otf') format('opentype'); /* Định dạng là OpenType */
-  }
-  
-  .cta-button {
-    font-family: 'ButtonFont', sans-serif;  /* Chỉnh font chữ ở đây */
-    font-size: 2rem;                   /* Kích thước chữ */
-    font-weight: bold;                   /* Đậm chữ */                    
-    padding: 20px 20px;
-    background-color: #805847;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-  }
+  width: 5.2rem;
+  height: 5.2rem;
+  background-color: #a27662;
+  border: 0.3rem solid #f1e1d3;
+  border-radius: 1.7rem;
+  margin: 0.2rem;
+  display: inline-block;
+  position: relative;
+}
 
-  .cta-button a {
-    text-decoration: none;
-    color: #dfcfc9; /* Màu chữ */   
-  }
+.has-tick .tick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: #f1e1d3;
+}
 
-  .cta-button:hover {
-    background-color: #fbefc0;  /* Thay đổi màu nền khi di chuột qua */
-  }
+.cta-container {
+  display: flex;
+  justify-content: center; /* Centers the button horizontally */
+  align-items: center;     /* Centers the button vertically */
+  padding: 4rem
+}
 
-  .cta-button:hover a {
-    color: #885949;  /* Thay đổi màu nền khi di chuột qua */
-  }
-  
+
+@font-face {
+  font-family: 'ButtonFont';
+  src: url('./assets/fonts/Sublima-ExtraBold.otf') format('opentype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TitleFont';
+  src: url('./assets/fonts/Coolvetica Rg.otf') format('opentype');
+  font-display: swap;
+}
+
+.cta-button {
+  font-family: 'ButtonFont', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem 6rem;
+  background-color: #805847;
+  color: #fff;
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.cta-button:hover {
+  background-color: #fbefc0;
+  transform: scale(1.05);
+  color: #805847;
+}
+
+.cta-button:focus {
+  outline: 0.1875rem solid #dfcfc9;
+}
+
 .homepage {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Đảm bảo trang chiếm toàn bộ chiều cao */
+  height: 100vh;
   width: 100%;
-  background-color: #a27662; /* Thêm màu nền cho homepage */
+  background-color: #a27662;
+  padding: 0 1.25rem;
 }
 
 .squares-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px; /* Khoảng cách giữa các hàng */
+  gap: 0.9375rem;
 }
 
 .row {
   display: flex;
-  justify-content: center; /* Căn giữa các ô vuông trong hàng */
-  gap: 5px; /* Khoảng cách giữa các ô vuông */
-}
-
-@font-face {
-  font-family: 'TitleFont'; /* Tên tùy chỉnh để dùng trong CSS */
-  src: url('./assets/fonts/Coolvetica Rg.otf') format('opentype'); /* Định dạng là OpenType */
+  justify-content: center;
+  gap: 0.625rem;
+  flex-wrap: wrap;
 }
 
 .title {
-  font-family: 'TitleFont', sans-serif; /* Sử dụng font chữ tuỳ chỉnh */
-  font-size: 7rem;
+  font-family: 'TitleFont', sans-serif;
+  font-size: 6rem;
   font-weight: bold;
   text-align: center;
-  margin-top: 10px;
-  color: #49342c;
+  margin-top: 1.25rem;
+  margin-bottom: 3rem;
+  color: #4a3329;
 }
-
-  

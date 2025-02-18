@@ -152,7 +152,9 @@ const AppPage = () => {
       });
       
       // Thông báo thành công
-      toast.success('Task created successfully!');
+      toast.success('Task created successfully!', {
+        position: 'top-left',
+      });
     })
     .catch((error) => {
       if (error.name === 'TypeError') {

@@ -24,7 +24,7 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-
+    
     // Validate due date
     const today = new Date().toISOString().split("T")[0];
     if (editedTask.due_date < today) {
@@ -33,9 +33,27 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
     }
 
     const payload = {
-      ...editedTask
-      // category: editedTask.custom_category || editedTask.category,
+      ...editedTask,
+      category: editedTask.custom_category || editedTask.category,
     };
+
+    axios.patch(`http://localhost:8000/api/v1/tasks/${task.id}/`, payload)
+      .then((response) => {
+        console.log(response)
+        setFetchedTask(response.data);
+        setIsEditing(false);
+        toast.success("Task updated successfully!", {
+          position: 'top-left'
+        });
+        // Add this line to refresh the task list
+        if (typeof onUpdate === "function") {
+          // onUpdate();  // This will trigger the fetchData in AppPage
+        }
+      })
+      .catch((error) => {
+        console.error('Error updating task:', error);
+        toast.error("Error updating task, please try again.");
+      });
   };
 
   const handleDelete = () => {
@@ -45,7 +63,9 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
         if (typeof onDelete === "function") {
           onDelete(task.id);
         }
-        toast.success("Task deleted successfully!");
+        toast.success("Task deleted successfully!", {
+          position: 'top-left'
+        })
       })
       .catch((error) => {
         console.error("Error deleting task:", error);
@@ -68,7 +88,7 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
   return (
     <div className="task-item">
       {isEditing ? (
-        <form onSubmit={onUpdate}>
+        <form onSubmit={handleUpdate}>
           <label>
             Title:
             <input
@@ -171,9 +191,9 @@ const TaskItem = ({ task, onDelete, categories, onUpdate }) => {
         <>
           <h3>{fetchedTask.title}</h3>
           <p>Status: {fetchedTask.status}</p>
-          <p>Due: {task.due_date}</p>
+          <p>Due: {new Date(fetchedTask.due_date).toLocaleDateString()}</p>
           <p>Priority: {fetchedTask.priority}</p>
-          <p>Category: {(categories?.find(cat => cat.id === task.category)?.name) || 'No category'}</p>
+          <p>Category: {(categories?.find(cat => cat.id === fetchedTask.category)?.name) || 'No category'}</p>
           <p>Important: {fetchedTask.is_important ? 'Yes' : 'No'}</p>
           <button onClick={() => setIsEditing(true)}>Edit</button>
           <button onClick={handleDelete}>Delete</button>

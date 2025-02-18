@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Button = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="cta-container">
       <motion.button
@@ -10,8 +12,9 @@ const Button = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 1 }}
+        onClick={() => navigate('/app')}
       >
-        <Link to="/app">Create now!</Link>
+        Create now!
       </motion.button>
     </div>
   );
