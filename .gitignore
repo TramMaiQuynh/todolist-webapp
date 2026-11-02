@@ -1,4 +1,7 @@
 todoenv/
+**/.venv/
+**/db.sqlite3
+**/staticfiles/
 *.pyc
 __pycache__/
 *.log
@@ -21,6 +24,8 @@ build/
 
 # # production
 /build
+**/dist/
+**/coverage/
 
 # # misc
 .DS_Store
