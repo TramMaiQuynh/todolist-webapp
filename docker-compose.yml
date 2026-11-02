@@ -1,0 +1,76 @@
+﻿services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-todolist}
+      POSTGRES_USER: ${POSTGRES_USER:-todolist}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the root .env file}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-todolist} -d ${POSTGRES_DB:-todolist}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  init:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file: .env
+    # Owns the shared static volume so collectstatic can update files from prior deployments.
+    user: "0:0"
+    environment:
+      POSTGRES_HOST: db
+      DJANGO_DEBUG: "false"
+      DJANGO_TEST_SQLITE: "false"
+      DJANGO_ALLOWED_HOSTS: "${DJANGO_ALLOWED_HOSTS:-localhost},127.0.0.1,backend,frontend"
+    command: sh -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - static_data:/app/staticfiles
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file: .env
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST: db
+      DJANGO_DEBUG: "false"
+      DJANGO_TEST_SQLITE: "false"
+      DJANGO_ALLOWED_HOSTS: "${DJANGO_ALLOWED_HOSTS:-localhost},127.0.0.1,backend,frontend"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    volumes:
+      - static_data:/app/staticfiles:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/healthz/')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: frontend/todo_frontend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8080:80"
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://127.0.0.1/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  static_data:
