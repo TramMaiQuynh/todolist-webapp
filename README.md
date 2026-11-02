@@ -1,148 +1,103 @@
-* CÔNG NGHỆ CỦA DỰ ÁN:
+# To-do list web app
 
-- Backend sử dụng framework Django
-- Frontend sử dụng framework ReactJs
-- Database sử dụng PostgreSQL
+Ứng dụng quản lý công việc với Django REST Framework, React và PostgreSQL.
 
-* HƯỚNG DẪN CHẠY DỰ ÁN.
+## Chạy toàn bộ ứng dụng bằng Docker
 
-I. Tạo môi trường ảo trước!!!!
+Cần Docker Engine/Desktop và Docker Compose. Tại thư mục gốc:
 
-1. Ae cài file requirements.txt vào env của ae nha
-2. Kích hoạt môi trường ảo lên 
+```sh
+cp .env.example .env
+```
 
-(HÃY CHẮC CHẮN RẰNG MỌI HOẠT ĐỘNG VỀ SAU ĐỀU ĐƯỢC CHẠY TRONG MÔI TRƯỜNG ẢO)
+Đổi `DJANGO_SECRET_KEY` và `POSTGRES_PASSWORD` trong `.env`, rồi khởi động:
 
-II> Tạo cơ sở dữ liệu trước nhé!
+```sh
+docker compose up --build
+```
 
-Dự án này sử dụng PostgreSQL làm cơ sở dữ liệu. Sau khi clone về, các bạn cần thực hiện các bước sau để cấu hình và chạy được dự án trên máy của mình.
+Compose đợi PostgreSQL sẵn sàng, chạy `migrate` và `collectstatic`, rồi mới khởi động Gunicorn và nginx. Mở <http://localhost:8080>. API dùng cùng origin tại `/api/v1/`; health check ở `/healthz/`. Dừng bằng `docker compose down`; dữ liệu PostgreSQL nằm trong volume `postgres_data` và được giữ lại. Muốn xóa cả dữ liệu, dùng `docker compose down -v`.
 
-1. Nếu bạn chưa cài đặt PostgreSQL, hãy thực hiện theo hướng dẫn dưới đây:
+Compose phục vụ HTTP để phát triển và chạy thử tại máy cá nhân. Khi đưa ra Internet, đặt nginx sau TLS reverse proxy và cấu hình proxy đó ghi đè header `X-Forwarded-Proto` theo kết nối TLS. Dùng secret ngẫu nhiên (`python -c "import secrets; print(secrets.token_urlsafe(64))"`), khai báo hostname thật trong `DJANGO_ALLOWED_HOSTS`, đặt đúng `CSRF_TRUSTED_ORIGINS`, rồi bật `DJANGO_SSL_REDIRECT=true`, `DJANGO_SECURE_COOKIES=true` và HSTS sau khi HTTPS đã hoạt động ổn định. Chỉ bật `DJANGO_HSTS_INCLUDE_SUBDOMAINS=true` và `DJANGO_HSTS_PRELOAD=true` nếu mọi subdomain cũng chỉ phục vụ HTTPS và domain đủ điều kiện preload.
 
-Trên Ubuntu:
-Mở Terminal và chạy:
+### Nâng cấp từ database phiên bản cũ
 
-sudo apt update
-sudo apt install postgresql postgresql-contrib
+Migration giữ lại task và danh mục từ schema cũ. Nếu database chỉ có một tài khoản đang hoạt động, các task cũ được gán cho tài khoản đó. Nếu không có hoặc có nhiều tài khoản, migration tạo chủ sở hữu khóa `legacy_import` (hoặc tên có hậu tố), bị vô hiệu hóa để tránh cấp nhầm dữ liệu. Quản trị viên cần chuyển các task đó sang đúng tài khoản trước khi người dùng truy cập. Hãy sao lưu PostgreSQL trước khi nâng cấp.
 
-Trên Windows:
-Truy cập PostgreSQL Download Page và tải về trình cài đặt.
-Chạy trình cài đặt và làm theo hướng dẫn trên màn hình.
+Sau migration, có thể xem các tài khoản nhập dữ liệu bằng Django shell:
 
-Sau khi run file .exe của PostgreSQL xong, ta đã hoàn thành việc cài PostgreSQL vào máy
+```sh
+docker compose exec backend python manage.py shell -c "from django.contrib.auth import get_user_model; print(list(get_user_model().objects.filter(username__startswith='legacy_import').values_list('username', 'is_active')))"
+```
 
-2. Tiếp theo, bạn cần tạo một tài khoản user mới và database mới của PostgreSQL cho dự án này (Nghĩa là mỗi bạn clone về sẽ phải tự tạo database riêng cho máy bạn). Hãy thực hiện theo các bước sau:
+Các cảnh báo `manage.py check --deploy` về HTTPS/HSTS là có chủ đích khi chạy Compose cục bộ qua HTTP; production cần bật các biến bảo mật bên trên và kiểm tra lại sau khi TLS reverse proxy đã cấu hình.
 
-Mở Command Prompt lên. Sau đó, chạy lệnh: 
+## Chạy backend và frontend riêng để phát triển
 
-psql -U postgres 
+Cần Python 3.11+ và Node.js 22+. Tạo `.env` từ `.env.example`, rồi cài backend:
 
-để chạy PostgreSQL với quyền admin. 
+```sh
+python -m venv backend/.venv
+# Windows PowerShell:
+backend\.venv\Scripts\Activate.ps1
+# macOS/Linux: source backend/.venv/bin/activate
+pip install -r requirements.txt
+```
 
-3. Sau đó, tạo cơ sở dữ liệu mới bằng dòng lệnh sau đây:
+Đặt `POSTGRES_HOST=localhost` trong `.env` nếu PostgreSQL đang chạy trên máy host. Nếu chưa có PostgreSQL, bỏ các biến `POSTGRES_*` hoặc xóa `POSTGRES_DB` để Django dùng SQLite cục bộ.
 
-CREATE DATABASE your_database_name; // ví dụ thay your_database_name thành todo_database
-
-Vậy đã hoàn tất việc tạo database PostgreSQL trên máy của bạn. Hãy lưu ý tên database này để sử dụng trong các bước tiếp theo.
-
-4. Kế tiếp, bạn sẽ tạo tài khoản user. Hãy chạy lệnh sau:
-
-CREATE USER your_username WITH PASSWORD 'your_password';
-
-your_username sẽ là tên tài khoản của bạn, và your_password sẽ là mật khẩu của bạn. Ví dụ, bạn có thể tạo tài khoản với tên là "todo_user" và mật khẩu là "todo_password". Vậy là bạn đã hoàn thành việc tạo user và database trong PostgreSQL.
-
-5. Việc cần làm cuối cùng là cấp quyền cho người dùng trên cơ sở dữ liệu bằng câu lệnh sau:
-
-GRANT ALL PRIVILEGES ON DATABASE your_database_name TO your_username;
-
-Và ta phải kết nối vào database đã tạo bằng câu lệnh sau đây:
-
-\c your_database_name
-
-Sau đó, cấp quyền trên schema public bắng câu lệnh này:
-
-GRANT ALL PRIVILEGES ON SCHEMA public TO your_username;
-
-GRANT ALL PRIVILEGES ON SCHEMA public TO todo_user;
-
-Cuối cùng, gõ lệnh sau để thoát khỏi PostgreSQL:
-
-\q
-
-Xong, bạn đã tạo thành công cơ sở dữ liệu và tài khoản người dùng cho dự án của mình.
-
-6. Vậy làm sao để dự án hiểu được bạn sẽ sử dụng database và user của PostgreSQL bạn vừa tạo? 
-Bạn sẽ phải thêm thông tin về cơ sở dữ liệu và người dùng vào file setting.py của dự án. Hãy thêm các dòng sau vào file setting.py:
-(file setting.py nằm ở Backend/todo_backend/setting.py)
-
-DATABASES = {
-    'default': {
-         'ENGINE': 'django.db.backends.postgresql',
-         'NAME': 'ten_database_cua_ban',
-         'USER': 'ten_user_cua_ban',
-         'PASSWORD': 'mat_khau_cua_ban',
-         'HOST': 'localhost',
-         'PORT': '5432',
-    }
-}
-
-7. Chưa xong đâu, sau khi cấu hình cơ sở dữ liệu trong file settings.py, bước tiếp theo là kết nối Django với cơ sở dữ liệu PostgreSQL và thiết lập các bảng cần thiết. Để thực hiện, chúng ta sử dụng hai lệnh quan trọng đó là makemigrations và migrate. 
-
-Django sẽ chuẩn bị các file migration để mô tả cách tạo bảng. Hãy chạy câu lệnh sau:
-Lưu ý, lệnh dưới đây cần phải được chạy trong thư mục chứa file manage.py.
-(Nên bạn hãy cd đến thư mục Backend vì thư mục này chứa file manage.py)
-
-python manage.py makemigrations
-
-Sau khi tạo file migration, cần áp dụng chúng lên cơ sở dữ liệu PostgreSQL. Chạy lệnh sau:
-
+```sh
+cd backend
 python manage.py migrate
-
-Xong!!!!! Bạn đã xong bước cài csdl cho dự án. Vậy là chạy dự án được rồi nhé. Cách chạy như sau:
-
-p/s: vì ta sử dụng hai framework riêng biệt cho backend và frontend (backend sử dụng Django, frontend sử dụng ReactJs).
-Nên nếu sử dụng terminal thì cần phải có 2 terminal chạy song song cùng lúc. (Hoặc nếu sử dụng Command Prompt thì phải mở hai tab
-chạy cùng lúc)
-
-II> Chạy dự án
-
-1. Chạy server backend
-
-Ở terminal đầu tiên:
-
-p/s: đừng quên rằng phải chạy trong môi trường ảo của bạn vừa tạo nhaa!
-
-Chúng ta đang đứng tại vị trí sau: \ToDoList-WebApp
-Chúng ta sẽ đi đến: cd Backend
-Ở vị trí này ta chạy lệnh:
-
 python manage.py runserver
+```
 
-2. Chạy frontend
+Trong terminal khác:
 
-Ở terminal thứ hai (chạy song song với terminal đầu tiên):
-
-Chúng ta hãy cd đến thư mục Frontend
-Sau đó, cd đến thư mục todo_frontend
-Ở đây, chạy lệnh:
-
-npm install
-
-Tiếp theo, bạn chạy lệnh này là có thể chạy được frontend của project:
-
+```sh
+cd frontend/todo_frontend
+npm ci
 npm start
+```
 
+frontend dev server chạy tại <http://localhost:5173> và proxy API tới `http://127.0.0.1:8000`. Để trỏ frontend đến API ở origin khác, đặt `VITE_API_URL` trước khi build.
 
+## Cấu hình môi trường
 
+Cấu hình được đọc từ biến môi trường hoặc file `.env` ở thư mục gốc hay `backend/`. Xem [.env.example](.env.example) để biết các giá trị mẫu. Những biến thường cần chỉnh:
 
+| Biến | Mục đích |
+| --- | --- |
+| `DJANGO_SECRET_KEY` | Khóa bí mật Django; bắt buộc khi `DJANGO_DEBUG=false` |
+| `DJANGO_DEBUG` | Chế độ debug; mặc định tắt |
+| `DJANGO_ALLOWED_HOSTS` | Danh sách hostname được phép, phân tách bằng dấu phẩy |
+| `TIME_ZONE` | Múi giờ Django; mặc định `Asia/Ho_Chi_Minh` |
+| `DJANGO_TEST_SQLITE` | Dùng SQLite riêng cho test; Compose tắt để kiểm tra trên PostgreSQL |
+| `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD` | Thông tin database PostgreSQL |
+| `POSTGRES_HOST`, `POSTGRES_PORT` | Địa chỉ PostgreSQL; Compose tự đặt host thành `db` |
+| `CORS_ALLOWED_ORIGINS`, `CSRF_TRUSTED_ORIGINS` | Các origin được phép, phân tách bằng dấu phẩy |
+| `AUTH_TOKEN_TTL_DAYS` | Số ngày hiệu lực của token |
 
+## Kiểm tra
 
+Chạy backend tests trong `backend/`:
 
+```sh
+python manage.py test
+```
 
+Mặc định test backend dùng SQLite riêng để chạy nhanh. Để kiểm tra migration và toàn bộ test trên PostgreSQL bằng Docker Compose:
 
+```sh
+docker compose run --rm backend python manage.py test
+```
 
+Build và test frontend:
 
-
-
-
+```sh
+cd frontend/todo_frontend
+npm ci
+npm test
+npm run build
+```
 
