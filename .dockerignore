@@ -1,0 +1,9 @@
+.git
+.env
+**/node_modules
+**/.venv
+Backend/db.sqlite3
+Frontend/todo_frontend/build
+Frontend/todo_frontend/coverage
+__pycache__
+*.py[cod]
