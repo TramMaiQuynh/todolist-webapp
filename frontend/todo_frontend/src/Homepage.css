@@ -41,7 +41,7 @@
 .preview-footer { display: flex; align-items: center; gap: 10px; padding-top: 12px; color: #8e9b91; font-size: 9px; }
 .preview-progress { width: 72px; height: 5px; overflow: hidden; border-radius: 9px; background: #edf1e9; }
 .preview-progress i { display: block; width: 34%; height: 100%; border-radius: inherit; background: #84a96a; }
-.art-note { position: absolute; right: 0; bottom: 47px; display: flex; align-items: center; gap: 9px; padding: 12px 15px; border: 1px solid rgba(224, 232, 217, .9); border-radius: 14px; color: #3a5541; background: rgba(255, 255, 255, .9); box-shadow: 0 14px 30px rgba(50, 74, 56, .1); font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 750; line-height: 1.35; transform: rotate(4deg); }
+.art-note { position: absolute; z-index: 2; right: 0; bottom: 47px; display: flex; align-items: center; gap: 9px; padding: 12px 15px; border: 1px solid rgba(224, 232, 217, .9); border-radius: 14px; color: #3a5541; background: rgba(255, 255, 255, .95); box-shadow: 0 14px 30px rgba(50, 74, 56, .12); font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 750; line-height: 1.35; transform: rotate(4deg); }
 .art-note-star { color: #87a857; font-size: 23px; }
 .landing-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px max(34px, calc((100vw - 1186px) / 2)); border-top: 1px solid #e2e8df; }
 .landing-bottom span { color: #80917f; font-size: 9px; font-weight: 700; letter-spacing: .14em; }
